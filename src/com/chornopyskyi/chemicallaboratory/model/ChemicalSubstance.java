@@ -1,28 +1,42 @@
-package com.chornopyskyi.chemicallaboratory.persistence.entity.impl;
+package com.chornopyskyi.chemicallaboratory.model;
 
 import java.util.UUID;
 import java.util.Objects;
 
 public class ChemicalSubstance {
 
-    private UUID id;
+    private long idSubstance;
     private String name;
+    private String molecularFormula;
     private String description;
     private String substanceType;
 
-    public ChemicalSubstance(UUID id, String name, String description, String substanceType) {
-        this.id = id;
+    public ChemicalSubstance(long idSubstance, String name, String molecularFormula, String description, String substanceType) {
+        this.idSubstance = idSubstance;
         this.name = name;
+        this.molecularFormula = molecularFormula;
         this.description = description;
         this.substanceType = substanceType;
     }
 
-    public UUID getId() {
-        return id;
+    public ChemicalSubstance() {
+
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public String getMolecularFormula() {
+        return molecularFormula;
+    }
+
+    public void setMolecularFormula(String molecularFormula) {
+        this.molecularFormula = molecularFormula;
+    }
+
+    public long getId() {
+        return idSubstance;
+    }
+
+    public void setId(long idSubstance) {
+        this.idSubstance = idSubstance;
     }
 
     public String getName() {
@@ -58,19 +72,20 @@ public class ChemicalSubstance {
             return false;
         }
         ChemicalSubstance that = (ChemicalSubstance) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(idSubstance, that.idSubstance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idSubstance);
     }
 
     @Override
     public String toString() {
         return "ChemicalSubstance{" +
-            "id=" + id +
+            "id=" + idSubstance +
             ", name='" + name + '\'' +
+            ", molecularFormula='" + molecularFormula + '\'' +
             ", description='" + description + '\'' +
             ", substanceType='" + substanceType + '\'' +
             '}';

@@ -1,4 +1,4 @@
-package com.chornopyskyi.chemicallaboratory.persistence.entity.impl;
+package com.chornopyskyi.chemicallaboratory.model;
 
 
 import java.util.Objects;
@@ -6,26 +6,29 @@ import java.util.UUID;
 
 public class Equipment {
 
-    private UUID id;
+    private long idEquipment;
     private String name;
     private String description;
     private String functionalityDescription;
     private String usageMethod;
 
-    public Equipment(UUID id, String name, String description, String functionalityDescription, String usageMethod) {
-        this.id = id;
+    public Equipment(long idEquipment, String name, String description, String functionalityDescription, String usageMethod) {
+        this.idEquipment = idEquipment;
         this.name = name;
         this.description = description;
         this.functionalityDescription = functionalityDescription;
         this.usageMethod = usageMethod;
     }
 
-    public UUID getId() {
-        return id;
+    public Equipment() {
+
+    }
+    public long getId() {
+        return idEquipment;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(long idEquipment) {
+        this.idEquipment = idEquipment;
     }
 
     public String getName() {
@@ -69,18 +72,18 @@ public class Equipment {
             return false;
         }
         Equipment equipment = (Equipment) o;
-        return Objects.equals(id, equipment.id);
+        return Objects.equals(idEquipment, equipment.idEquipment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idEquipment);
     }
 
     @Override
     public String toString() {
         return "Equipment{" +
-            "id=" + id +
+            "id=" + idEquipment +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
             ", functionalityDescription='" + functionalityDescription + '\'' +

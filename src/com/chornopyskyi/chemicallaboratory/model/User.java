@@ -1,23 +1,48 @@
-package com.chornopyskyi.chemicallaboratory.persistence.entity.impl;
+package com.chornopyskyi.chemicallaboratory.model;
 
-import com.chornopyskyi.chemicallaboratory.persistence.exception.EntityArgumentException;
-import com.chornopyskyi.chemicallaboratory.persistence.entity.Entity;
-import com.chornopyskyi.chemicallaboratory.persistence.entity.ErrorTemplates;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
+@JsonPropertyOrder({"idUser", "username", "password", "email", "role", "errors", "valid"})
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class User extends EntityErrors {
 
-public class User extends Entity {
-
-    private final String password;
+    private String idUser;
+    private String password;
     private String email;
     private String username;
+    private String role;
 
-    public User(UUID id, String password, String email, String username) {
-        super(id);
-        this.password = validatedPassword(password);
+    public User(@JsonProperty("password") String password,  @JsonProperty("email") String email,
+        @JsonProperty("username") String username, @JsonProperty("role") String role) {
+        this.idUser = UUID.randomUUID().toString();
+        this.password = setPassword(password);
         this.email = setEmail(email);
         setUsername(username);
+        this.role = role;
+    }
+
+    public User() {
+        // Пустий конструктор
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPassword() {
@@ -32,8 +57,8 @@ public class User extends Entity {
         return username;
     }
 
-    private String setEmail(String email) {
-        final String templateName = "електронної пошти";
+    public String setEmail(String email) {
+      final String templateName = "електронної пошти";
 
         if (email.isBlank()) {
             errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
@@ -62,7 +87,7 @@ public class User extends Entity {
     }
 
     public void setUsername(String username) {
-        final String templateName = "логіну";
+      final String templateName = "логіну";
 
         if (username.isBlank()) {
             errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
@@ -73,8 +98,8 @@ public class User extends Entity {
         if (username.length() > 24) {
             errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 24));
         }
-        var pattern = Pattern.compile("^[a-zA-Z0-9_]+$");
-        if (pattern.matcher(username).matches()) {
+        var pattern = Pattern.compile("^[A-Za-z0-9_.\\s]+$");
+        if (!pattern.matcher(username).matches()) {
             errors.add(ErrorTemplates.ONLY_LATIN.getTemplate().formatted(templateName, 24));
         }
 
@@ -85,20 +110,20 @@ public class User extends Entity {
         this.username = username;
     }
 
-    private String validatedPassword(String password) {
+    public String setPassword(String password) {
         final String templateName = "паролю";
 
         if (password.isBlank()) {
             errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
         }
         if (password.length() < 8) {
-            errors.add(ErrorTemplates.MIN_LENGTH.getTemplate().formatted(templateName, 4));
+            errors.add(ErrorTemplates.MIN_LENGTH.getTemplate().formatted(templateName, 8));
         }
-        if (password.length() > 32) {
-            errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 32));
+        if (password.length() > 24) {
+            errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 24));
         }
-        var pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$");
-        if (pattern.matcher(password).matches()) {
+        var pattern = Pattern.compile("^[A-Za-z0-9_.\\s]+$");
+        if (!pattern.matcher(password).matches()) {
             errors.add(ErrorTemplates.PASSWORD.getTemplate().formatted(templateName, 24));
         }
 
@@ -132,7 +157,16 @@ public class User extends Entity {
                 "password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
-                ", id=" + id +
+                ", id=" + idUser +
                 '}';
     }
+
+    public void displayUserInfo() {
+        System.out.println("User Information:");
+        System.out.println("ID: " + idUser);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+        System.out.println("Email: " + email);
+    }
+
 }

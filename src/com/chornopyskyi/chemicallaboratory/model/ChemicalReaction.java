@@ -1,4 +1,4 @@
-package com.chornopyskyi.chemicallaboratory.persistence.entity.impl;
+package com.chornopyskyi.chemicallaboratory.model;
 
 import java.util.UUID;
 
@@ -7,26 +7,29 @@ import java.util.Objects;
 
 public class ChemicalReaction {
 
-    private UUID id;
+    private long idReaction;
     private List<String> reactants;
     private List<String> products;
     private String reactionType;
     private List<String> equipmentList;
 
-    public ChemicalReaction(UUID id, List<String> reactants, List<String> products, String reactionType, List<String> equipmentList) {
-        this.id = id;
+    public ChemicalReaction(long idReaction, List<String> reactants, List<String> products, String reactionType, List<String> equipmentList) {
+        this.idReaction = idReaction;
         this.reactants = reactants;
         this.products = products;
         this.reactionType = reactionType;
         this.equipmentList = equipmentList;
     }
 
-    public UUID getId() {
-        return id;
+    public ChemicalReaction() {
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public long getIdReaction() {
+        return idReaction;
+    }
+
+    public void setIdReaction(long idReaction) {
+        this.idReaction = idReaction;
     }
 
     public List<String> getReactants() {
@@ -70,18 +73,18 @@ public class ChemicalReaction {
             return false;
         }
         ChemicalReaction that = (ChemicalReaction) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(idReaction, that.idReaction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idReaction);
     }
 
     @Override
     public String toString() {
         return "ChemicalReaction{" +
-            "id=" + id +
+            "id=" + idReaction +
             ", reactants=" + reactants +
             ", products=" + products +
             ", reactionType='" + reactionType + '\'' +

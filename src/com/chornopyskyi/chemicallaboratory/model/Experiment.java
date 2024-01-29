@@ -1,4 +1,4 @@
-package com.chornopyskyi.chemicallaboratory.persistence.entity.impl;
+package com.chornopyskyi.chemicallaboratory.model;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Experiment implements Comparable<Experiment> {
 
-    private UUID id;
+    private long id;
     private String name;
     private String description;
     private List<String> results; // Результати експерименту
     private List<ChemicalReaction> chemicalReactions; // Список хімічних реакцій
 
 
-    public Experiment(UUID id, String name, String description, List<String> results, List<ChemicalReaction> chemicalReactions) {
+    public Experiment(long id, String name, String description, List<String> results, List<ChemicalReaction> chemicalReactions) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -53,11 +53,11 @@ public class Experiment implements Comparable<Experiment> {
         this.chemicalReactions = chemicalReactions;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
