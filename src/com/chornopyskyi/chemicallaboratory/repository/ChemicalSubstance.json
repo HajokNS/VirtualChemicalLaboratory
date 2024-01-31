@@ -1,0 +1,61 @@
+[ {
+  "name" : "Аміак",
+  "molecularFormula" : "H₂O",
+  "description" : "Безбарвна рідина без запаху та смаку; найпоширеніша речовина на Землі.",
+  "substanceType" : "З'єднання",
+  "id" : 1
+}, {
+  "name" : "Кисень",
+  "molecularFormula" : "O₂",
+  "description" : "Безбарвний газ, необхідний для дихання живих організмів.",
+  "substanceType" : "Газ",
+  "id" : 2
+}, {
+  "name" : "Глюкоза",
+  "molecularFormula" : "C₆H₁₂O₆",
+  "description" : "Важлива енергетична речовина для живих клітин.",
+  "substanceType" : "Органічна сполука",
+  "id" : 3
+}, {
+  "name" : "Сірка",
+  "molecularFormula" : "S₈",
+  "description" : "Хімічний елемент, використовується в різних галузях промисловості.",
+  "substanceType" : "Елемент",
+  "id" : 4
+}, {
+  "name" : "Хлор",
+  "molecularFormula" : "Cl₂",
+  "description" : "Отруйний газ, використовується в дезінфекції та виробництві хімічних речовин.",
+  "substanceType" : "Газ",
+  "id" : 5
+}, {
+  "name" : "Натрій хлорид",
+  "molecularFormula" : "NaCl",
+  "description" : "Біла кристалічна речовина, використовується для приправлення їжі та в хімії.",
+  "substanceType" : "Сполука",
+  "id" : 6
+}, {
+  "name" : "Етанол",
+  "molecularFormula" : "C₂H₅OH",
+  "description" : "Спирт, який використовується у харчовій та хімічній промисловості.",
+  "substanceType" : "Органічна сполука",
+  "id" : 7
+}, {
+  "name" : "Карбонат кальцій",
+  "molecularFormula" : "CaCO₃",
+  "description" : "Мінерал, використовується у будівництві та виробництві цементу.",
+  "substanceType" : "Сполука",
+  "id" : 8
+}, {
+  "name" : "Метан",
+  "molecularFormula" : "CH₄",
+  "description" : "Безбарвний газ, основна складова природного газу.",
+  "substanceType" : "Газ",
+  "id" : 9
+}, {
+  "name" : "Аміак",
+  "molecularFormula" : "NH₃",
+  "description" : "Безбарвний газ, використовується в сільському господарстві та промисловості.",
+  "substanceType" : "Газ",
+  "id" : 10
+} ]

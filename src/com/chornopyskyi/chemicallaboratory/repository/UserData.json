@@ -1,0 +1,9 @@
+[ {
+  "idUser" : "5175f65c-ad8e-40da-84b3-9cfdae1861df",
+  "username" : "Denis",
+  "password" : "Denis123",
+  "email" : "Deniska@gmail.com",
+  "role" : "Адмін",
+  "errors" : [ ],
+  "valid" : true
+} ]

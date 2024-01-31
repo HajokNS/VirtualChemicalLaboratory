@@ -1,0 +1,36 @@
+[ {
+  "idReaction" : 896483348500139144,
+  "experimentId" : 0,
+  "reactants" : [ "C₂H₅OH", "NaCl" ],
+  "products" : [ "C₂H₅OHNaCl" ],
+  "reactionType" : "Двійкова",
+  "equipmentList" : [ "Лабораторний апарат" ]
+}, {
+  "idReaction" : 6097984596669252564,
+  "experimentId" : 10,
+  "reactants" : [ "O₂", "C₂H₅OH" ],
+  "products" : [ "O₂C₂H₅OH" ],
+  "reactionType" : "Ацидо-базова",
+  "equipmentList" : [ "Газова хроматографія" ]
+}, {
+  "idReaction" : -2797237963321095254,
+  "experimentId" : 6,
+  "reactants" : [ "C₂H₅OH", "CaCO₃" ],
+  "products" : [ "C₂H₅OHCaCO₃" ],
+  "reactionType" : "Синтез",
+  "equipmentList" : [ "Спектрометр ядерного магніту" ]
+}, {
+  "idReaction" : -7437418084740348889,
+  "experimentId" : 5,
+  "reactants" : [ "NH₃", "Cl₂" ],
+  "products" : [ "NH₃Cl₂" ],
+  "reactionType" : "Заміщення",
+  "equipmentList" : [ "Лабораторний апарат" ]
+}, {
+  "idReaction" : -8978587957695525538,
+  "experimentId" : 5,
+  "reactants" : [ "NaCl", "C₂H₅OH" ],
+  "products" : [ "NaClC₂H₅OH" ],
+  "reactionType" : "Двійкова",
+  "equipmentList" : [ "Лабораторний апарат" ]
+} ]
