@@ -1,20 +1,20 @@
 package com.chornopyskyi.chemicallaboratory.model;
 
-import java.util.UUID;
-
 import java.util.List;
 import java.util.Objects;
 
 public class ChemicalReaction {
 
     private long idReaction;
+    private long experimentId;
     private List<String> reactants;
     private List<String> products;
     private String reactionType;
     private List<String> equipmentList;
 
-    public ChemicalReaction(long idReaction, List<String> reactants, List<String> products, String reactionType, List<String> equipmentList) {
+    public ChemicalReaction(long idReaction, long experimentId, List<String> reactants, List<String> products, String reactionType, List<String> equipmentList) {
         this.idReaction = idReaction;
+        this.experimentId = experimentId;
         this.reactants = reactants;
         this.products = products;
         this.reactionType = reactionType;
@@ -22,6 +22,22 @@ public class ChemicalReaction {
     }
 
     public ChemicalReaction() {
+    }
+
+    public long getExperimentId() {
+        return experimentId;
+    }
+
+    public void setExperimentId(long experimentId) {
+        this.experimentId = experimentId;
+    }
+
+    public void setExperimentId(String experimentId) {
+        try {
+            this.experimentId = Long.parseLong(experimentId);
+        } catch (NumberFormatException e) {
+            System.out.println("Помилка конвертації experimentId: " + e.getMessage());
+        }
     }
 
     public long getIdReaction() {
@@ -85,6 +101,7 @@ public class ChemicalReaction {
     public String toString() {
         return "ChemicalReaction{" +
             "id=" + idReaction +
+            ", experimentId=" + experimentId + '\'' +
             ", reactants=" + reactants +
             ", products=" + products +
             ", reactionType='" + reactionType + '\'' +
@@ -92,4 +109,3 @@ public class ChemicalReaction {
             '}';
     }
 }
-

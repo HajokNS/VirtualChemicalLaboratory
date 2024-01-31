@@ -17,13 +17,12 @@ public class Menu {
     }
 
     public static void show() throws IllegalAccessException {
-        //while (true) {
-        CustomerConsoleUI.printLine('-', 20);
-        CustomerConsoleUI.printTitle("MENU");
-        CustomerConsoleUI.printLine('-', 20);
-        // }
+        ExperimentService experimentService = new ExperimentService();
 
-        // Джсон файл про звіт,туда записати хімічні речовини, які були використані, (короче, всі поля, які є в хімічній реакції)
+        CustomerConsoleUI.printLine('-', 20);
+        CustomerConsoleUI.printTitle("Меню лабораторії");
+        CustomerConsoleUI.printLine('-', 20);
+
 
         while (true) {
             String userRole = Application.currentUser.getRole();
@@ -38,9 +37,10 @@ public class Menu {
                 CustomerConsoleUI.printMenu("3) Інформація");
                 CustomerConsoleUI.printMenu("4) Хімічна реакція речовин");
                 CustomerConsoleUI.printMenu("5) Проведення експерименту");
+                CustomerConsoleUI.printMenu("6) Фільтрація експериментів");
 
                  if ("Адмін".equals(userRole)) {
-                    CustomerConsoleUI.printMenu("6) Видалення користувачів");
+                    CustomerConsoleUI.printMenu("7) Видалення користувачів");
                 }
             }
 
@@ -221,25 +221,30 @@ public class Menu {
                         break;
                     case 5:
 
+                        experimentService.loadExperiments("src/com/chornopyskyi/chemicallaboratory/repository/Experiments.json");
+                        experimentService.loadChemicalReactions("src/com/chornopyskyi/chemicallaboratory/repository/ReportResults.json");
+                        experimentService.conductExperiment();
                         break;
 
                     case 6:
+                        experimentService.loadExperiments("src/com/chornopyskyi/chemicallaboratory/repository/Experiments.json");
+                        experimentService.filterExperiments();
 
+                        break;
+                    case 7:
                         if ("Адмін".equals(userRole)) {
-                        UserInputHandler userInputHandler = new UserInputHandler();
-                        UserService userService = new UserService();
+                            UserInputHandler userInputHandler = new UserInputHandler();
+                            UserService userService = new UserService();
 
-                        userService.printAllUsers();
+                            userService.printAllUsers();
 
-                        String emailToDelete = userInputHandler.promptUserForString("Введіть емейл користувача для видалення");
-                        userService.deleteUserByEmail(emailToDelete);
+                            String emailToDelete = userInputHandler.promptUserForString("Введіть емейл користувача для видалення");
+                            userService.deleteUserByEmail(emailToDelete);
                         } else {
                             CustomerConsoleUI.printSystemMessage(
                                 "Невірний вибір. Спробуйте ще раз.");
                         }
-
                         break;
-
                     case 0:
                                 // Вихід
 

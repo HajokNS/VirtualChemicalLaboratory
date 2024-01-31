@@ -6,19 +6,20 @@ import java.util.List;
 
 public class Experiment implements Comparable<Experiment> {
 
-    private long id;
+    private long idExperiment;
     private String name;
-    private String description;
-    private List<String> results; // Результати експерименту
-    private List<ChemicalReaction> chemicalReactions; // Список хімічних реакцій
+    private String theme;
+    private String goal;
 
-
-    public Experiment(long id, String name, String description, List<String> results, List<ChemicalReaction> chemicalReactions) {
-        this.id = id;
+    public Experiment(long idExperiment, String name, String theme, String goal) {
+        this.idExperiment = idExperiment;
         this.name = name;
-        this.description = description;
-        this.results = results;
-        this.chemicalReactions = chemicalReactions;
+        this.theme = theme;
+        this.goal = goal;
+    }
+
+    public Experiment() {
+
     }
 
     public String getName() {
@@ -29,36 +30,28 @@ public class Experiment implements Comparable<Experiment> {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public long getIdExperiment() {
+        return idExperiment;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setIdExperiment(long idExperiment) {
+        this.idExperiment = idExperiment;
     }
 
-    public List<String> getResults() {
-        return results;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setResults(List<String> results) {
-        this.results = results;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
-    public List<ChemicalReaction> getChemicalReactions() {
-        return chemicalReactions;
+    public String getGoal() {
+        return goal;
     }
 
-    public void setChemicalReactions(List<ChemicalReaction> chemicalReactions) {
-        this.chemicalReactions = chemicalReactions;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 
     @Override
@@ -75,22 +68,21 @@ public class Experiment implements Comparable<Experiment> {
             return false;
         }
         Experiment that = (Experiment) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(idExperiment, that.idExperiment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idExperiment);
     }
 
     @Override
     public String toString() {
         return "Experiment{" +
             "name='" + name + '\'' +
-            ", description='" + description + '\'' +
-            ", results=" + results +
-            ", chemicalReactions=" + chemicalReactions +
-            ", id=" + id +
+            ", description='" + theme + '\'' +
+            ", results=" + goal + '\'' +
+            ", id=" + idExperiment + '\'' +
             '}';
     }
 }
