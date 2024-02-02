@@ -1,6 +1,7 @@
 package com.chornopyskyi.chemicallaboratory.service;
 
 import com.chornopyskyi.chemicallaboratory.model.Equipment;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.chornopyskyi.chemicallaboratory.view.CustomerConsoleUI;
 import com.chornopyskyi.chemicallaboratory.view.UserInputHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +11,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Клас `JsonEditorEquipment` відповідає за редагування та збереження даних
+ * про обладнання у форматі JSON. Надає можливість вибору об'єкту для редагування та
+ * здійснення змін у ньому.
+ */
 public class JsonEditorEquipment {
 
+    /**
+     * Метод {@code editJsonForObjectType} обробляє вибір типу об'єкту для редагування
+     * та викликає відповідний метод редагування.
+     *
+     * @param objectType Тип об'єкту для редагування ("Equipment" - обладнання).
+     */
     public static void editJsonForObjectType(String objectType) {
         switch (objectType) {
             case "Equipment":
@@ -22,6 +34,13 @@ public class JsonEditorEquipment {
         }
     }
 
+    /**
+     * Метод {@code saveEquipmentToJson} зберігає список обладнання у файл JSON
+     * за вказаним шляхом.
+     *
+     * @param equipmentList Список об'єктів обладнання для збереження.
+     * @param filePath      Шлях до файлу JSON для збереження.
+     */
     public void saveEquipmentToJson(List<Equipment> equipmentList, String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -32,11 +51,15 @@ public class JsonEditorEquipment {
         }
     }
 
+    /**
+     * Метод {@code editEquipmentJson} викликається для редагування обладнання.
+     * Користувач обирає обладнання за айді, та редагує його властивості.
+     * Зміни зберігаються у файл JSON.
+     */
     private static void editEquipmentJson() {
         JsonEditorEquipment jsonEditor = new JsonEditorEquipment(); // Створюємо екземпляр класу JsonEditor
         EquipmentService equipmentService = new EquipmentService();
-        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(Path.EQUIPMENT_JSON.getPath());
 
         // Виведення списку обладнання для вибору, яке редагувати
         System.out.println("Оберіть обладнання для редагування:");
@@ -102,8 +125,7 @@ public class JsonEditorEquipment {
             }
 
             // Збереження змін у JSON файл
-            jsonEditor.saveEquipmentToJson(equipmentList,
-                "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+            jsonEditor.saveEquipmentToJson(equipmentList, Path.EQUIPMENT_JSON.getPath());
 
             System.out.println("Дані успішно оновлено.");
         } else {

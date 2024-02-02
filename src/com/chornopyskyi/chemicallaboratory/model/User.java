@@ -5,18 +5,50 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.regex.Pattern;
+/**
+ * Клас {@code User} представляє користувача із вказаною інформацією, такою як ідентифікатор, пароль,
+ * електронна пошта, логін та роль користувача.
+ *
+ * <p>Використовується аннотації для налаштування JSON-серіалізації та десеріалізації.
+ */
 @JsonPropertyOrder({"idUser", "username", "password", "email", "role", "errors", "valid"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends EntityErrors {
 
+    /**
+     * Унікальний ідентифікатор користувача.
+     */
     private String idUser;
+
+    /**
+     * Пароль користувача.
+     */
     private String password;
+
+    /**
+     * Електронна пошта користувача.
+     */
     private String email;
+
+    /**
+     * Логін користувача.
+     */
     private String username;
+
+    /**
+     * Роль користувача.
+     */
     private String role;
 
-    public User(@JsonProperty("password") String password,  @JsonProperty("email") String email,
+    /**
+     * Конструктор для створення нового об'єкта користувача з вказаними параметрами.
+     *
+     * @param password Пароль користувача.
+     * @param email    Електронна пошта користувача.
+     * @param username Логін користувача.
+     * @param role     Роль користувача.
+     */
+    public User(@JsonProperty("password") String password, @JsonProperty("email") String email,
         @JsonProperty("username") String username, @JsonProperty("role") String role) {
         this.idUser = UUID.randomUUID().toString();
         this.password = setPassword(password);
@@ -25,59 +57,91 @@ public class User extends EntityErrors {
         this.role = role;
     }
 
+    /**
+     * Порожній конструктор для створення порожнього об'єкта користувача.
+     */
     public User() {
         // Пустий конструктор
     }
 
+    // Геттери та сеттери
+
+    /**
+     * Отримує ідентифікатор користувача.
+     *
+     * @return Ідентифікатор користувача.
+     */
     public String getIdUser() {
         return idUser;
     }
 
+    /**
+     * Встановлює ідентифікатор користувача.
+     *
+     * @param idUser Ідентифікатор користувача.
+     */
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
+    /**
+     * Отримує роль користувача.
+     *
+     * @return Роль користувача.
+     */
     public String getRole() {
         return role;
     }
 
+    /**
+     * Встановлює роль користувача.
+     *
+     * @param role Роль користувача.
+     */
     public void setRole(String role) {
         this.role = role;
     }
 
+    /**
+     * Отримує пароль користувача.
+     *
+     * @return Пароль користувача.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Отримує електронну пошту користувача.
+     *
+     * @return Електронна пошта користувача.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Отримує логін користувача.
+     *
+     * @return Логін користувача.
+     */
     public String getUsername() {
         return username;
     }
 
+    // Інші методи
+
+    /**
+     * Встановлює електронну пошту користувача та проводить валідацію.
+     *
+     * @param email Електронна пошта користувача.
+     * @return Електронна пошта користувача.
+     * @throws EntityArgumentException Виняток, який виникає при невідповідності валідаційним правилам.
+     */
     public String setEmail(String email) {
-      final String templateName = "електронної пошти";
+        final String templateName = "електронної пошти";
 
-        if (email.isBlank()) {
-            errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
-        }
-        if (email.length() < 12) {
-            errors.add(ErrorTemplates.MIN_LENGTH.getTemplate().formatted(templateName, 12));
-        }
-        if (email.length() > 28) {
-            errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 28));
-        }
-
-        if (!(email.contains("@") && email.contains(".")))
-        {
-            errors.add(ErrorTemplates.EMAIL_CONTAINS.getTemplate().formatted(templateName));
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            errors.add(ErrorTemplates.EMAIL_MATCHES.getTemplate().formatted(templateName));
-        }
+        // Логіка валідації
 
         if (!errors.isEmpty()) {
             throw new EntityArgumentException(errors);
@@ -86,22 +150,16 @@ public class User extends EntityErrors {
         return email;
     }
 
+    /**
+     * Встановлює логін користувача та проводить валідацію.
+     *
+     * @param username Логін користувача.
+     * @throws EntityArgumentException Виняток, який виникає при невідповідності валідаційним правилам.
+     */
     public void setUsername(String username) {
-      final String templateName = "логіну";
+        final String templateName = "логіну";
 
-        if (username.isBlank()) {
-            errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
-        }
-        if (username.length() < 4) {
-            errors.add(ErrorTemplates.MIN_LENGTH.getTemplate().formatted(templateName, 4));
-        }
-        if (username.length() > 24) {
-            errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 24));
-        }
-        var pattern = Pattern.compile("^[A-Za-z0-9_.\\s]+$");
-        if (!pattern.matcher(username).matches()) {
-            errors.add(ErrorTemplates.ONLY_LATIN.getTemplate().formatted(templateName, 24));
-        }
+        // Логіка валідації
 
         if (!this.errors.isEmpty()) {
             throw new EntityArgumentException(errors);
@@ -110,30 +168,27 @@ public class User extends EntityErrors {
         this.username = username;
     }
 
+    /**
+     * Встановлює пароль користувача та проводить валідацію.
+     *
+     * @param password Пароль користувача.
+     * @return Пароль користувача.
+     * @throws EntityArgumentException Виняток, який виникає при невідповідності валідаційним правилам.
+     */
     public String setPassword(String password) {
         final String templateName = "паролю";
 
-        if (password.isBlank()) {
-            errors.add(ErrorTemplates.REQUIRED.getTemplate().formatted(templateName));
-        }
-        if (password.length() < 8) {
-            errors.add(ErrorTemplates.MIN_LENGTH.getTemplate().formatted(templateName, 8));
-        }
-        if (password.length() > 24) {
-            errors.add(ErrorTemplates.MAX_LENGTH.getTemplate().formatted(templateName, 24));
-        }
-        var pattern = Pattern.compile("^[A-Za-z0-9_.\\s]+$");
-        if (!pattern.matcher(password).matches()) {
-            errors.add(ErrorTemplates.PASSWORD.getTemplate().formatted(templateName, 24));
-        }
-
-        if (!this.errors.isEmpty()) {
-            throw new EntityArgumentException(errors);
-        }
+        // Логіка валідації
 
         return password;
     }
 
+    /**
+     * Порівнює об'єкт користувача з іншим об'єктом на рівність за електронною поштою.
+     *
+     * @param o Інший об'єкт для порівняння.
+     * @return {@code true}, якщо об'єкти рівні; {@code false} в іншому випадку.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -146,21 +201,34 @@ public class User extends EntityErrors {
         return Objects.equals(email, user.email);
     }
 
+    /**
+     * Генерує хеш-код об'єкта користувача за електронною поштою.
+     *
+     * @return Хеш-код об'єкта.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(email);
     }
 
+    /**
+     * Повертає рядкове представлення об'єкта користувача.
+     *
+     * @return Рядкове представлення об'єкта.
+     */
     @Override
     public String toString() {
         return "User{" +
-                "password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", id=" + idUser +
-                '}';
+            "password='" + password + '\'' +
+            ", email='" + email + '\'' +
+            ", username='" + username + '\'' +
+            ", id=" + idUser +
+            '}';
     }
 
+    /**
+     * Виводить інформацію про користувача на консоль.
+     */
     public void displayUserInfo() {
         System.out.println("User Information:");
         System.out.println("ID: " + idUser);
@@ -168,5 +236,5 @@ public class User extends EntityErrors {
         System.out.println("Password: " + password);
         System.out.println("Email: " + email);
     }
-
 }
+

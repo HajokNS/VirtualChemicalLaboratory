@@ -1,16 +1,29 @@
 package com.chornopyskyi.chemicallaboratory.service;
 
 import com.chornopyskyi.chemicallaboratory.model.ChemicalSubstance;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.chornopyskyi.chemicallaboratory.view.CustomerConsoleUI;
 import com.chornopyskyi.chemicallaboratory.view.UserInputHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Клас `JsonEditorSubstance` відповідає за редагування та збереження даних
+ * про хімічні речовини у форматі JSON. Надає можливість вибору об'єкту для редагування та
+ * здійснення змін у ньому.
+ */
 public class JsonEditorSubstance {
 
+    /**
+     * Метод {@code editJsonForObjectType} обробляє вибір типу об'єкту для редагування
+     * та викликає відповідний метод редагування.
+     *
+     * @param objectType Тип об'єкту для редагування ("ChemicalSubstance" - хімічна речовина).
+     */
     public static void editJsonForObjectType(String objectType) {
         switch (objectType) {
             case "ChemicalSubstance":
@@ -21,6 +34,13 @@ public class JsonEditorSubstance {
         }
     }
 
+    /**
+     * Метод {@code saveChemicalSubstancesToJson} зберігає список хімічних речовин у файл JSON
+     * за вказаним шляхом.
+     *
+     * @param substances Список об'єктів хімічних речовин для збереження.
+     * @param filePath   Шлях до файлу JSON для збереження.
+     */
     public void saveChemicalSubstancesToJson(List<ChemicalSubstance> substances, String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -31,11 +51,16 @@ public class JsonEditorSubstance {
         }
     }
 
+    /**
+     * Метод {@code editChemicalSubstancesJson} викликається для редагування хімічних речовин.
+     * Користувач обирає речовину за айді, та редагує її властивості.
+     * Зміни зберігаються у файл JSON.
+     */
     private static void editChemicalSubstancesJson() {
         JsonEditorSubstance jsonEditor = new JsonEditorSubstance(); // Створюємо екземпляр класу JsonEditor
         ChemicalSubstanceService substanceService = new ChemicalSubstanceService();
         List<ChemicalSubstance> substances = substanceService.getChemicalSubstancesFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+            Path.SUBSTANCE_JSON.getPath());
 
         // Виведення списку речовин для вибору, яку редагувати
         System.out.println("Оберіть речовину для редагування:");
@@ -101,8 +126,7 @@ public class JsonEditorSubstance {
             }
 
             // Збереження змін у JSON файл
-            jsonEditor.saveChemicalSubstancesToJson(substances,
-                "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+            jsonEditor.saveChemicalSubstancesToJson(substances, Path.SUBSTANCE_JSON.getPath());
 
             System.out.println("Дані успішно оновлено.");
         } else {

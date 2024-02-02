@@ -1,17 +1,24 @@
 package com.chornopyskyi.chemicallaboratory.service;
 
 import com.chornopyskyi.chemicallaboratory.model.ChemicalSubstance;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.chornopyskyi.chemicallaboratory.view.CustomerConsoleUI;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Клас, який надає методи для додавання та видалення хімічних речовин через редагування JSON файлу.
+ */
 public class JsonAddDelSubstance {
 
+    /**
+     * Додає нову хімічну речовину до JSON файлу.
+     */
     public static void addChemicalSubstanceJson() {
         JsonEditorSubstance jsonEditor = new JsonEditorSubstance();
         ChemicalSubstanceService substanceService = new ChemicalSubstanceService();
         List<ChemicalSubstance> substances = substanceService.getChemicalSubstancesFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+            Path.SUBSTANCE_JSON.getPath());
 
         // Отримання айді останнього елемента у списку
         long lastId = substances.isEmpty() ? 0 : substances.get(substances.size() - 1).getId();
@@ -27,16 +34,20 @@ public class JsonAddDelSubstance {
         substances.add(newSubstance);
 
         // Збереження змін у JSON файл
-        jsonEditor.saveChemicalSubstancesToJson(substances,
-            "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+        jsonEditor.saveChemicalSubstancesToJson(substances, Path.SUBSTANCE_JSON.getPath());
 
         System.out.println("Нова хімічна речовина успішно додана.");
     }
 
+    /**
+     * Видаляє хімічну речовину за її айді з JSON файлу.
+     *
+     * @param idToDelete Айді хімічної речовини для видалення.
+     */
     public void deleteChemicalSubstanceById(long idToDelete) {
         ChemicalSubstanceService substanceService = new ChemicalSubstanceService();
         List<ChemicalSubstance> substances = substanceService.getChemicalSubstancesFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+            Path.SUBSTANCE_JSON.getPath());
 
         // Пошук хімічної речовини за введеним айді
         ChemicalSubstance substanceToRemove = substances.stream()
@@ -49,15 +60,10 @@ public class JsonAddDelSubstance {
             // Видалення хімічної речовини та збереження змін у JSON файл
             substances.remove(substanceToRemove);
             JsonEditorSubstance jsonEditor = new JsonEditorSubstance();
-            jsonEditor.saveChemicalSubstancesToJson(substances,
-                "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+            jsonEditor.saveChemicalSubstancesToJson(substances, Path.SUBSTANCE_JSON.getPath());
             System.out.println("Хімічну речовину з айді " + idToDelete + " успішно видалено.");
         } else {
             System.out.println("Хімічну речовину з айді " + idToDelete + " не знайдено.");
         }
     }
 }
-
-
-
-

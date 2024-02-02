@@ -2,6 +2,7 @@ package com.chornopyskyi.chemicallaboratory.service;
 
 import com.chornopyskyi.chemicallaboratory.model.ChemicalReaction;
 import com.chornopyskyi.chemicallaboratory.model.Experiment;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -11,32 +12,47 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Клас, який надає сервісні методи для проведення експериментів та роботи з результатами.
+ */
 public class ExperimentService {
-
 
     private List<Experiment> experiments = new ArrayList<>();
     private List<ChemicalReaction> chemicalReactions = new ArrayList<>();
 
+    /**
+     * Завантажує дані про експерименти з JSON файлу.
+     *
+     * @param filePath Шлях до JSON файлу з даними про експерименти.
+     */
     public void loadExperiments(String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Experiment[] experimentArray = objectMapper.readValue(new File(filePath), Experiment[].class);
-            experiments.addAll(List.of(experimentArray));
+            experiments = new ArrayList<>(List.of(experimentArray));
         } catch (IOException e) {
             System.out.println("Помилка при зчитуванні експериментів з файлу: " + e.getMessage());
         }
     }
 
+    /**
+     * Завантажує дані про хімічні реакції з JSON файлу.
+     *
+     * @param filePath Шлях до JSON файлу з даними про хімічні реакції.
+     */
     public void loadChemicalReactions(String filePath) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             ChemicalReaction[] reactionArray = objectMapper.readValue(new File(filePath), ChemicalReaction[].class);
-            chemicalReactions.addAll(List.of(reactionArray));
+            chemicalReactions = new ArrayList<>(List.of(reactionArray));
         } catch (IOException e) {
             System.out.println("Помилка при зчитуванні хімічних реакцій з файлу: " + e.getMessage());
         }
     }
 
+    /**
+     * Виводить на консоль інформацію про доступні експерименти.
+     */
     public void printExperiments() {
         System.out.println("Список експериментів:");
         for (Experiment experiment : experiments) {
@@ -45,6 +61,9 @@ public class ExperimentService {
         }
     }
 
+    /**
+     * Фільтрує реакції за номером експерименту та виводить результати на консоль.
+     */
     public void filterExperiments() {
         Scanner scanner = new Scanner(System.in);
 
@@ -57,7 +76,7 @@ public class ExperimentService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            File file = new File("src/com/chornopyskyi/chemicallaboratory/repository/ReportResults.json");
+            File file = new File(Path.REPORT_JSON.getPath());
 
             // Перевірка існування введеного idExperiment в файлі "ReportResult.json"
             List<ChemicalReaction> existingResults = new ArrayList<>();
@@ -92,6 +111,9 @@ public class ExperimentService {
         }
     }
 
+    /**
+     * Проводить експеримент з вибраними хімічними реакціями та зберігає результати у файл.
+     */
     public void conductExperiment() {
         Scanner scanner = new Scanner(System.in);
 
@@ -145,12 +167,9 @@ public class ExperimentService {
             reaction.getReactionType(), formatList(reaction.getEquipmentList()));
     }
 
-
-
     private String formatList(List<String> items) {
         return items.stream().collect(Collectors.joining(", "));
     }
-
 
     private Experiment getExperimentById(int experimentId) {
         for (Experiment experiment : experiments) {
@@ -179,7 +198,7 @@ public class ExperimentService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            File file = new File("src/com/chornopyskyi/chemicallaboratory/repository/ReportResults.json");
+            File file = new File(Path.REPORT_JSON.getPath());
 
             // Зчитати попередні результати (якщо вони існують)
             List<ChemicalReaction> existingResults = new ArrayList<>();
@@ -190,7 +209,7 @@ public class ExperimentService {
                 existingResults.removeIf(reaction -> reaction.getExperimentId() == experimentId);
             }
 
-// Створити нові об'єкти ChemicalReaction з оновленим experimentId
+            // Створити нові об'єкти ChemicalReaction з оновленим experimentId
             List<ChemicalReaction> updatedReactions = new ArrayList<>();
             for (ChemicalReaction reaction : selectedReactions) {
                 boolean reactionExists = existingResults.stream()
@@ -224,6 +243,4 @@ public class ExperimentService {
             System.out.println("Помилка при збереженні результатів: " + e.getMessage());
         }
     }
-
 }
-

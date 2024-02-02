@@ -3,16 +3,22 @@ package com.chornopyskyi.chemicallaboratory.service;
 import com.chornopyskyi.chemicallaboratory.model.ChemicalSubstance;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+/**
+ * Клас, який надає сервісні методи для роботи з хімічними речовинами з JSON файлу.
+ */
 public class ChemicalSubstanceService {
 
+    /**
+     * Отримує список хімічних речовин з JSON файлу.
+     *
+     * @param filePath Шлях до JSON файлу з хімічними речовинами.
+     * @return Список об'єктів типу {@code ChemicalSubstance}.
+     */
     public List<ChemicalSubstance> getChemicalSubstancesFromJsonFile(String filePath) {
         List<ChemicalSubstance> chemicalSubstances = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -41,6 +47,11 @@ public class ChemicalSubstanceService {
         return chemicalSubstances;
     }
 
+    /**
+     * Виводить інформацію про хімічні речовини на консоль.
+     *
+     * @param substances Список хімічних речовин для виведення.
+     */
     public void printChemicalSubstances(List<ChemicalSubstance> substances) {
         if (substances.isEmpty()) {
             System.out.println("Немає даних про хімічні речовини.");
@@ -56,60 +67,4 @@ public class ChemicalSubstanceService {
             }
         }
     }
-
-   /* public List<ChemicalSubstance> chooseChemicalSubstances(List<ChemicalSubstance> substances) {
-        Scanner scanner = new Scanner(System.in);
-        List<ChemicalSubstance> chosenSubstances = new ArrayList<>();
-
-        System.out.println("Виберіть номери двох хімічних речовин (через кому):");
-        for (int i = 0; i < substances.size(); i++) {
-            System.out.println((i + 1) + ". " + substances.get(i).getName());
-        }
-
-        String input = scanner.next();
-        String[] choices = input.split(",");
-
-        if (choices.length != 2) {
-            System.out.println("Невірний ввід. Виберіть дві речовини, використовуючи кому.");
-            return null;
-        }
-
-        try {
-            int choice1 = Integer.parseInt(choices[0].trim());
-            int choice2 = Integer.parseInt(choices[1].trim());
-
-            if (choice1 >= 1 && choice1 <= substances.size() && choice2 >= 1
-                && choice2 <= substances.size()) {
-                chosenSubstances.add(substances.get(choice1 - 1));
-                chosenSubstances.add(substances.get(choice2 - 1));
-            } else {
-                System.out.println("Невірний ввід. Виберіть дві речовини, використовуючи кому.");
-                return null;
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Невірний ввід. Введіть числа, використовуючи кому.");
-            return null;
-        }
-
-        return chosenSubstances;
-    }*/
-
-   /* public void saveChemicalSubstancesToJsonFile(List<ChemicalSubstance> selectedSubstances,
-        String filePath) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-
-        try {
-            // Включення форматування для красивого JSON
-            objectWriter = objectWriter.with(SerializationFeature.INDENT_OUTPUT);
-
-            // Запис JSON до файлу
-            objectWriter.writeValue(new File(filePath), selectedSubstances);
-            System.out.println("Реактиви були успішно збережені у файл: " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Помилка при збереженні реактивів у файл: " + filePath);
-        }
-    }*/
-
 }

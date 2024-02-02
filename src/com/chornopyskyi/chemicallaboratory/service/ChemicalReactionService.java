@@ -3,6 +3,7 @@ package com.chornopyskyi.chemicallaboratory.service;
 import com.chornopyskyi.chemicallaboratory.model.ChemicalReaction;
 import com.chornopyskyi.chemicallaboratory.model.Equipment;
 import com.chornopyskyi.chemicallaboratory.model.ChemicalSubstance;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.chornopyskyi.chemicallaboratory.view.CustomerConsoleUI;
 import com.chornopyskyi.chemicallaboratory.view.UserInputHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,8 +19,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Сервіс для виконання хімічних реакцій.
+ */
 public class ChemicalReactionService {
 
+    /**
+     * Виконує хімічні реакції шляхом вибору випадкових молекулярних формул,
+     * типу реакції, обладнання та збереження результату у JSON файл.
+     */
     public void performChemicalReactions() {
         // 1. Отримання 10 молекулярних формул
         List<ChemicalSubstance> randomSubstances = getRandomChemicalSubstances(10);
@@ -82,27 +90,41 @@ public class ChemicalReactionService {
             Collections.singletonList(selectedEquipment)
         );
 
-        saveResultToJson(result,
-            "src/com/chornopyskyi/chemicallaboratory/repository/ReportResults.json");
+        saveResultToJson(result, Path.REPORT_JSON.getPath());
     }
 
-
+    /**
+     * Отримує випадкові молекулярні формули з файлу заздалегідь визначеної кількості.
+     *
+     * @param count Кількість молекулярних формул для отримання.
+     * @return Список молекулярних формул.
+     */
     private List<ChemicalSubstance> getRandomChemicalSubstances(int count) {
         // Отримати всі молекулярні формули з JSON файлу
-        List<ChemicalSubstance> allSubstances = getChemicalSubstancesFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/ChemicalSubstance.json");
+        List<ChemicalSubstance> allSubstances = getChemicalSubstancesFromJsonFile(Path.SUBSTANCE_JSON.getPath());
 
         // Забрати необхідну кількість формул
         Collections.shuffle(allSubstances);
         return allSubstances.subList(0, Math.min(count, allSubstances.size()));
     }
 
+    /**
+     * Виводить на консоль список молекулярних формул.
+     *
+     * @param substances Список молекулярних формул для виведення.
+     */
     private void printChemicalSubstances(List<ChemicalSubstance> substances) {
         for (int i = 0; i < substances.size(); i++) {
             CustomerConsoleUI.printMenu((i + 1) + ") " + substances.get(i).getMolecularFormula());
         }
     }
 
+    /**
+     * Парсить введення користувача та повертає список вибраних індексів.
+     *
+     * @param userChoice Рядок, що містить введення користувача.
+     * @return Список індексів, вибраних користувачем.
+     */
     private List<Integer> parseUserChoice(String userChoice) {
         String[] selectedIndexes = userChoice.split(",");
 
@@ -132,6 +154,11 @@ public class ChemicalReactionService {
         return result;
     }
 
+    /**
+     * Отримує від користувача тип реакції та повертає його строкове представлення.
+     *
+     * @return Тип реакції, вибраний користувачем.
+     */
     private String getReactionType() {
         // Повторення введення, поки користувач не введе дійсний тип реакції
         while (true) {
@@ -166,16 +193,32 @@ public class ChemicalReactionService {
         }
     }
 
+    /**
+     * Отримує всі можливі види обладнання з файлу.
+     *
+     * @return Список строкових представлень обладнання.
+     */
     private List<String> getAllEquipment() {
-        return getEquipmentFromJsonFile("src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+        return getEquipmentFromJsonFile(Path.EQUIPMENT_JSON.getPath());
     }
 
+    /**
+     * Виводить на консоль список обладнання.
+     *
+     * @param equipment Список обладнання для виведення.
+     */
     private void printEquipment(List<String> equipment) {
         for (int i = 0; i < equipment.size(); i++) {
             CustomerConsoleUI.printMenu((i + 1) + ") " + equipment.get(i));
         }
     }
 
+    /**
+     * Зберігає результат хімічної реакції у JSON файл.
+     *
+     * @param result  Результат хімічної реакції для збереження.
+     * @param filePath Шлях до файлу для збереження результату.
+     */
     private void saveResultToJson(ChemicalReaction result, String filePath) {
         try {
             // Створіть екземпляр ObjectMapper
@@ -209,6 +252,12 @@ public class ChemicalReactionService {
         }
     }
 
+    /**
+     * Отримує молекулярні формули з JSON файлу за вказаним шляхом.
+     *
+     * @param filePath Шлях до файлу з молекулярними формулами.
+     * @return Список молекулярних формул.
+     */
     private List<ChemicalSubstance> getChemicalSubstancesFromJsonFile(String filePath) {
         try {
             // Створити екземпляр ObjectMapper
@@ -237,6 +286,12 @@ public class ChemicalReactionService {
         }
     }
 
+    /**
+     * Отримує список видів обладнання з JSON файлу за вказаним шляхом.
+     *
+     * @param filePath Шлях до файлу з обладнанням.
+     * @return Список строкових представлень обладнання.
+     */
     private List<String> getEquipmentFromJsonFile(String filePath) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();

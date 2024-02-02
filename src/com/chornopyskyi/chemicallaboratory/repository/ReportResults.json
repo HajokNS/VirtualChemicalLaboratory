@@ -27,8 +27,15 @@
   "reactionType" : "Заміщення",
   "equipmentList" : [ "Лабораторний апарат" ]
 }, {
+  "idReaction" : 5403850392722557117,
+  "experimentId" : 2,
+  "reactants" : [ "C₂H₅OH", "S₈" ],
+  "products" : [ "C₂H₅OHS₈" ],
+  "reactionType" : "Заміщення",
+  "equipmentList" : [ "Ваги аналітичні" ]
+}, {
   "idReaction" : -8978587957695525538,
-  "experimentId" : 5,
+  "experimentId" : 3,
   "reactants" : [ "NaCl", "C₂H₅OH" ],
   "products" : [ "NaClC₂H₅OH" ],
   "reactionType" : "Двійкова",

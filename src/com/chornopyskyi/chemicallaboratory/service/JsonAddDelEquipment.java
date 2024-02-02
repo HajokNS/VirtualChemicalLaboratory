@@ -1,16 +1,23 @@
 package com.chornopyskyi.chemicallaboratory.service;
 
 import com.chornopyskyi.chemicallaboratory.model.Equipment;
+import com.chornopyskyi.chemicallaboratory.model.Path;
 import com.chornopyskyi.chemicallaboratory.view.CustomerConsoleUI;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Клас, який надає методи для додавання та видалення обладнання через редагування JSON файлу.
+ */
 public class JsonAddDelEquipment {
+
+    /**
+     * Додає нове обладнання до JSON файлу.
+     */
     public static void addEquipmentJson() {
         JsonEditorEquipment jsonEditor = new JsonEditorEquipment();
         EquipmentService equipmentService = new EquipmentService();
-        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(Path.EQUIPMENT_JSON.getPath());
 
         // Отримання айді останнього елемента у списку
         long lastId = equipmentList.isEmpty() ? 0 : equipmentList.get(equipmentList.size() - 1).getId();
@@ -26,16 +33,19 @@ public class JsonAddDelEquipment {
         equipmentList.add(newEquipment);
 
         // Збереження змін у JSON файл
-        jsonEditor.saveEquipmentToJson(equipmentList,
-            "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+        jsonEditor.saveEquipmentToJson(equipmentList, Path.EQUIPMENT_JSON.getPath());
 
         System.out.println("Нове обладнання успішно додано.");
     }
 
+    /**
+     * Видаляє обладнання за його айді з JSON файлу.
+     *
+     * @param idToDelete Айді обладнання для видалення.
+     */
     public static void deleteEquipmentById(long idToDelete) {
         EquipmentService equipmentService = new EquipmentService();
-        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(
-            "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+        List<Equipment> equipmentList = equipmentService.getEquipmentFromJsonFile(Path.EQUIPMENT_JSON.getPath());
 
         // Пошук обладнання за введеним айді
         Equipment equipmentToRemove = equipmentList.stream()
@@ -48,8 +58,7 @@ public class JsonAddDelEquipment {
             // Видалення обладнання та збереження змін у JSON файл
             equipmentList.remove(equipmentToRemove);
             JsonEditorEquipment jsonEditor = new JsonEditorEquipment();
-            jsonEditor.saveEquipmentToJson(equipmentList,
-                "src/com/chornopyskyi/chemicallaboratory/repository/Equipment.json");
+            jsonEditor.saveEquipmentToJson(equipmentList, Path.EQUIPMENT_JSON.getPath());
             System.out.println("Обладнання з айді " + idToDelete + " успішно видалено.");
         } else {
             System.out.println("Обладнання з айді " + idToDelete + " не знайдено.");

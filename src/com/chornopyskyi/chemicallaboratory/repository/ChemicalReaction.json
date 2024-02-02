@@ -1,26 +1,26 @@
 [
-  {
-    "idReaction": "1",
-    "reactants": ["H2", "O2"],
-    "products": ["H2O"],
-    "reactionType": "Згорання",
-    "equipmentList": ["Лабораторний апарат"]
-  },
-  {
-    "idReaction": "2",
-    "reactants": ["Na", "Cl"],
-    "products": ["NaCl"],
-    "reactionType": "Сполучення",
-    "equipmentList": ["Газова хроматографія"]
-  },
-  {
-    "idReaction": "3",
-    "reactants": ["CH4", "O2"],
-    "products": ["CO2", "H2O"],
-    "reactionType": "Згорання",
-    "equipmentList": ["Спектрофотометр"]
-  },
-  {
+    {
+      "idReaction": "1",
+      "reactants": ["H2", "O2"],
+      "products": ["H2O"],
+      "reactionType": "Згорання",
+      "equipmentList": ["Лабораторний апарат"]
+    },
+    {
+      "idReaction": "2",
+      "reactants": ["Na", "Cl"],
+      "products": ["NaCl"],
+      "reactionType": "Сполучення",
+      "equipmentList": ["Газова хроматографія"]
+    },
+    {
+      "idReaction": "3",
+      "reactants": ["CH4", "O2"],
+      "products": ["CO2", "H2O"],
+      "reactionType": "Згорання",
+      "equipmentList": ["Спектрофотометр"]
+    },
+    {
     "idReaction": "4",
     "reactants": ["Fe", "S"],
     "products": ["FeS"],
@@ -47,26 +47,5 @@
     "products": ["Na2SO4", "H2O"],
     "reactionType": "Двійна заміна",
     "equipmentList": ["Електрофорезний апарат"]
-  },
-  {
-    "idReaction": "8",
-    "reactants": ["CaCO3"],
-    "products": ["CaO", "CO2"],
-    "reactionType": "Розкладання",
-    "equipmentList": ["Термостат"]
-  },
-  {
-    "idReaction": "9",
-    "reactants": ["C2H4", "O2"],
-    "products": ["CO2", "H2O"],
-    "reactionType": "Згорання",
-    "equipmentList": ["Автоклав"]
-  },
-  {
-    "idReaction": "10",
-    "reactants": ["C8H18", "O2"],
-    "products": ["CO2", "H2O"],
-    "reactionType": "Згорання",
-    "equipmentList": ["Спектрометр ядерного магніту"]
   }
 ]

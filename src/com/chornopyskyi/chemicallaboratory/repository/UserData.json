@@ -6,4 +6,20 @@
   "role" : "Адмін",
   "errors" : [ ],
   "valid" : true
+}, {
+  "idUser" : "5a536655-48ed-45ac-a105-c3aa00a7a0a1",
+  "username" : "Deniska",
+  "password" : "Deniska123",
+  "email" : "FocusF@gmail.com",
+  "role" : "Викладач",
+  "errors" : [ ],
+  "valid" : true
+}, {
+  "idUser" : "a43ad0a6-af3d-492b-8781-986458878aae",
+  "username" : "Loader123",
+  "password" : "qwertyuio",
+  "email" : "qwer@gmail.com",
+  "role" : "Користувач",
+  "errors" : [ ],
+  "valid" : true
 } ]

@@ -8,7 +8,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Клас, який надає сервісні методи для роботи з обладнанням з JSON файлу.
+ */
 public class EquipmentService {
+
+    /**
+     * Отримує список обладнання з JSON файлу.
+     *
+     * @param filePath Шлях до JSON файлу з обладнанням.
+     * @return Список об'єктів типу {@code Equipment}.
+     */
     public List<Equipment> getEquipmentFromJsonFile(String filePath) {
         List<Equipment> equipmentList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -36,6 +46,11 @@ public class EquipmentService {
         return equipmentList;
     }
 
+    /**
+     * Виводить інформацію про обладнання на консоль.
+     *
+     * @param equipmentList Список об'єктів {@code Equipment} для виведення.
+     */
     public void printEquipment(List<Equipment> equipmentList) {
         if (equipmentList.isEmpty()) {
             System.out.println("Немає даних про обладнання.");
@@ -51,8 +66,4 @@ public class EquipmentService {
             }
         }
     }
-
-    
-
-
 }
